@@ -1,0 +1,40 @@
+.todoForm__input {
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+
+  input {
+    margin-top: 0.5rem;
+    padding: 0 1rem;
+    font: inherit;
+    border-radius: 1rem;
+    border: 1px solid black;
+    width: 35rem;
+    height: 4rem;
+    font-size: 1.8rem;
+    &:focus {
+      outline: 1px solid rgb(36, 36, 36);
+    }
+  }
+}
+
+.todoForm {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+
+  @media (max-width: 1024px) {
+    gap: 2rem;
+    flex-direction: column;
+
+    input {
+      width: 100%;
+    }
+  }
+}
+
+.todoForm__button {
+  @media (max-width: 1024px) {
+    margin-top: 2.3rem;
+  }
+}
