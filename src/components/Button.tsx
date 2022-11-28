@@ -3,11 +3,18 @@ import classes from './Button.module.less';
 type Props = {
   children: string;
   classModifier?: string;
+  disable?: boolean;
+  onClick?: () => void;
 };
 
-const Button: React.FC<Props> = (props) => {
+const Button = (props: Props) => {
   return (
-    <button className={`${classes.button} ${props.classModifier}`}>
+    <button
+      className={`${classes.Button} ${props.classModifier}`}
+      disabled={props.disable}
+      style={{ pointerEvents: props.disable ? 'none' : 'auto' }}
+      onClick={props.onClick}
+    >
       {props.children}
     </button>
   );

@@ -1,0 +1,65 @@
+.DatePicker_time {
+  min-width: 100%;
+  height: calc(100% - 4rem);
+  padding: 0.5rem;
+  position: relative;
+}
+
+.DatePicker_backArrow {
+  width: 2.5rem;
+  height: 2.5rem;
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+.DataPicker_inputs {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 4rem;
+  gap: 2rem;
+  span {
+    font-size: 4rem;
+    opacity: 0.6;
+  }
+  input {
+    font: inherit;
+    width: 30%;
+    height: 30%;
+    text-transform: capitalize;
+    text-align: center;
+    font-size: 4rem;
+
+    // disabling input scroll for numbers
+    /* Chrome, Safari, Edge, Opera */
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    &[type='number'] {
+      -moz-appearance: textfield;
+    }
+  }
+}
+
+.DatePicker_confirm {
+  width: 3.5rem;
+  height: 3.5rem;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+}

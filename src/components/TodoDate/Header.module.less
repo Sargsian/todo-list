@@ -1,0 +1,24 @@
+.DatePicker_header {
+  display: flex;
+  height: 4rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  width: 100%;
+  overflow: hidden;
+  img {
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+  img:first-child {
+    transform: rotate(180deg);
+  }
+}
+
+.DatePicker_currDate {
+  font-size: 1.8rem;
+}

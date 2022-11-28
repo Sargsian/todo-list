@@ -1,40 +1,26 @@
-.todoForm__input {
-  font-size: 2rem;
-  display: flex;
-  flex-direction: column;
-
-  input {
-    margin-top: 0.5rem;
-    padding: 0 1rem;
-    font: inherit;
-    border-radius: 1rem;
-    border: 1px solid black;
-    width: 35rem;
-    height: 4rem;
-    font-size: 1.8rem;
-    &:focus {
-      outline: 1px solid rgb(36, 36, 36);
-    }
-  }
-}
-
-.todoForm {
+.TodoForm {
   width: 100%;
   display: flex;
   justify-content: space-around;
+}
 
-  @media (max-width: 1024px) {
-    gap: 2rem;
+.TodoForm_iconWrapper {
+  display: flex;
+  gap: 0.7rem;
+}
+
+
+
+@media (max-width: 1124px) {
+  .TodoForm {
+    gap: 1rem;
     flex-direction: column;
+    margin-bottom: 1rem;
+  }
 
-    input {
-      width: 100%;
-    }
+  .TodoForm___formButton {
+    margin-top: 1.5rem;
   }
 }
 
-.todoForm__button {
-  @media (max-width: 1024px) {
-    margin-top: 2.3rem;
-  }
-}
+

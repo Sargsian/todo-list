@@ -1,4 +1,6 @@
-.layout {
+@danger-color: #bc3f4a;
+
+.App {
   margin: auto;
   margin-top: 4rem;
   max-width: 102.4rem;
@@ -13,8 +15,10 @@
   }
 }
 
-.layout__container {
+.App_container {
   border-radius: 1rem;
+  position: relative;
+
   padding: 5rem;
   width: 100%;
   height: 100%;
@@ -23,7 +27,7 @@
   background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
   gap: 2rem;
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1124px) {
     width: 80%;
   }
   @media (max-width: 768px) {
@@ -34,3 +38,36 @@
   }
 }
 
+.App_loading {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10%;
+  height: 1rem;
+  background-color: #81868C;
+  border-radius: 1rem;
+  animation: App_loading .5s alternate infinite;
+}
+
+@keyframes App_loading {
+  0% {
+    width: 10%;
+  }
+  100% {
+    width: 80%;
+  }
+}
+
+
+.App_errorLoading {
+  position: absolute;
+  top: 2rem;
+  font-size: 2rem;
+  padding: 0 2rem;
+  border-radius: 1rem;
+  left: 50%;
+  color: white;
+  transform: translateX(-50%);
+  background-color: @danger-color;
+}

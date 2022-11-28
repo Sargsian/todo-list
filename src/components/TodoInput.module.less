@@ -1,0 +1,29 @@
+.TodoForm_field {
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.TodoForm_input {
+  margin-top: 0.5rem;
+  padding: 0 1rem;
+  font: inherit;
+  border-radius: 1rem;
+  border: 1px solid black;
+  width: 35rem;
+  height: 4rem;
+  font-size: 1.8rem;
+  &:focus {
+    outline: 1px solid rgb(36, 36, 36);
+  }
+}
+
+.TodoForm_input___invalid {
+  border: 1px solid red;
+}
+
+@media (max-width: 1124px) {
+  .TodoForm_input {
+    width: 100%;
+  }
+}
