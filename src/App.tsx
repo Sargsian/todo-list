@@ -6,8 +6,11 @@ import { useFetch } from './hooks/useFetch';
 import { useMutate } from './hooks/useMutate';
 import { Todo } from './models/types';
 
+const api =
+  'https://todo-backend-4b99f-default-rtdb.europe-west1.firebasedatabase.app/todos.json';
+
 const App = () => {
-  const { data, loading, error, refetch } = useFetch();
+  const { data, loading, error, refetch } = useFetch(api);
   const [todos, setTodos] = useState<Todo[]>([]);
 
   useEffect(() => {
@@ -32,7 +35,7 @@ const App = () => {
     <div className='App'>
       <h1>Todo - лист</h1>
       <div className='App_container'>
-        <TodoForm addTodo={addTodo} />
+        <TodoForm addTodo={addTodo} refetch={refetch} />
         {loading && <div className='App_loading'></div>}
         {!loading && error && <div className='App_errorLoading'>Ошибка!</div>}
         {todos.length > 0 &&

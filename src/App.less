@@ -44,10 +44,10 @@
   left: 50%;
   transform: translateX(-50%);
   width: 10%;
-  height: 1rem;
-  background-color: #81868C;
+  height: .8rem;
+  background-color: #81868c;
   border-radius: 1rem;
-  animation: App_loading .5s alternate infinite;
+  animation: App_loading 0.5s alternate infinite;
 }
 
 @keyframes App_loading {
@@ -59,7 +59,6 @@
   }
 }
 
-
 .App_errorLoading {
   position: absolute;
   top: 2rem;
@@ -70,4 +69,9 @@
   color: white;
   transform: translateX(-50%);
   background-color: @danger-color;
+}
+
+.Backdrop {
+  inset: 0;
+  position: fixed;
 }

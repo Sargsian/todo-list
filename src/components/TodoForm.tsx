@@ -1,25 +1,31 @@
 import Button from './Button';
-import { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { Todo } from '../models/types';
 import TodoDate from './TodoDate';
 import TodoInput from './TodoInput';
+import TodoFile from './TodoFile';
+import { storage } from '../firebase';
+import { ref, uploadBytes } from 'firebase/storage';
+import { useFetch } from '../hooks/useFetch';
 
 import classes from './TodoForm.module.less';
-import TodoFile from './TodoFile';
 
 type Props = {
   addTodo: (todo: Todo) => void;
+  refetch: () => void
 };
 
 const TodoForm = (props: Props) => {
   const [deadline, setDeadline] = useState('');
-  const [fileList, setFileList] = useState<FileList>();
+  const [file, setFile] = useState<File>();
   const [titleIsEmpty, setTitleIsEmpty] = useState(false);
   const [descIsEmpty, setDescIsEmpty] = useState(false);
   const [deadlineIsEmpty, setDeadlineIsEmpty] = useState(false);
   const [fileListIsEmpty, setFileListIsEmpty] = useState(false);
+  const [fileIsLoading, setFileIsLoading] = useState(false);
 
-  const { addTodo } = props;
+
+  const { addTodo, refetch } = props;
 
   const addTodoHandler = (e: FormEvent) => {
     e.preventDefault();
@@ -37,24 +43,33 @@ const TodoForm = (props: Props) => {
       setDeadlineIsEmpty(true);
     }
 
-    if (!fileList?.length) {
+    if (!file) {
       setFileListIsEmpty(true);
     }
 
-    if (!title?.value || !desc?.value || !deadline || !fileList?.length) return;
-
+    if (!title?.value || !desc?.value || !deadline || !file) return;
+    const appId = Date.now().toString();
     addTodo({
       title: title.value,
       desc: desc.value,
       deadline,
       isDone: false,
       isDoneLate: false,
-      appId: Date.now().toString(),
+      appId: appId,
+      fileName: file.name,
     });
+    const fileRef = ref(storage, `${appId}-${file.name}`);
+    setFileIsLoading(true);
+    uploadBytes(fileRef, file).then(() => {
+      setFileIsLoading(false);
+      refetch()
+    });
+    refetch();
+
     title.value = '';
     desc.value = '';
     setDeadline('');
-    setFileList(undefined);
+    setFile(undefined);
   };
 
   const clearWarningsOnFocus = () => {
@@ -64,9 +79,8 @@ const TodoForm = (props: Props) => {
     setFileListIsEmpty(false);
   };
 
-  const attachFileHandler = (fileList: FileList) => {
-    console.log(fileList);
-    setFileList(fileList);
+  const attachFileHandler = (file: File) => {
+    setFile(file);
   };
 
   const titleRef = useRef<HTMLInputElement>(null);
@@ -75,7 +89,6 @@ const TodoForm = (props: Props) => {
   return (
     <form className={classes.TodoForm} onSubmit={addTodoHandler}>
       <span className={classes.TodoForm_iconWrapper}>
-        
         <TodoDate
           deadlineHandler={setDeadline}
           deadlineIsSet={deadline}
@@ -85,8 +98,9 @@ const TodoForm = (props: Props) => {
         <TodoFile
           attachFileHandler={attachFileHandler}
           clearWarningsOnFocus={clearWarningsOnFocus}
-          fileListIsAttached={fileList?.length}
-          fileListIsEmpty={fileListIsEmpty}
+          fileIsAttached={file}
+          fileIsEmpty={fileListIsEmpty}
+          fileIsLoading={fileIsLoading}
         />
       </span>
       <TodoInput
@@ -105,7 +119,7 @@ const TodoForm = (props: Props) => {
         htmlFor={'desc'}
         maxLength={455}
       />
-      <Button classModifier={classes.TodoForm___formButton}>
+      <Button classModifier={classes.TodoForm___formButton} onClick={refetch}>
         Создать todo
       </Button>
     </form>

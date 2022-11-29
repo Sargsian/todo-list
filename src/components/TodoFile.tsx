@@ -2,44 +2,43 @@ import { ChangeEvent } from 'react';
 import classes from './TodoFile.module.less';
 
 type Props = {
-  attachFileHandler: (file: FileList) => void;
+  attachFileHandler: (file: File) => void;
   clearWarningsOnFocus: () => void;
-  fileListIsAttached: number | undefined;
-  fileListIsEmpty: boolean;
+  fileIsAttached: File | undefined;
+  fileIsEmpty: boolean;
+  fileIsLoading: boolean;
 };
 
 const TodoFile = (props: Props) => {
   const {
     attachFileHandler,
     clearWarningsOnFocus,
-    fileListIsAttached,
-    fileListIsEmpty,
+    fileIsAttached,
+    fileIsEmpty,
+    fileIsLoading,
   } = props;
 
   const attachFile = (e: ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
     if (fileList) {
-      attachFileHandler(fileList);
+      attachFileHandler(fileList[0]);
     }
   };
 
-  console.log(fileListIsAttached, 'file is attached')
+  console.log(fileIsAttached, 'file is attached');
 
   return (
     <label
       htmlFor='file-upload'
+      title='Прикрепить файл'
       className={`${classes.TodoForm_attachIcon} ${
-        fileListIsAttached && classes.TodoForm_attachIcon___success
-      } ${fileListIsEmpty && classes.TodoForm_attachIcon___invalid}`}
+        fileIsAttached && classes.TodoForm_attachIcon___success
+      } ${fileIsEmpty && classes.TodoForm_attachIcon___invalid} `}
       onClick={clearWarningsOnFocus}
     >
       <img src='./attach.svg' alt='calendar' />
-      <input
-        type='file'
-        multiple={true}
-        id='file-upload'
-        onChange={(e) => attachFile(e)}
-      />
+      {fileIsLoading && <div className={classes.TodoItem_fileIsloading}></div>}
+      <input type='file' id='file-upload' onChange={(e) => attachFile(e)} />
     </label>
   );
 };

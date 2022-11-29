@@ -7,4 +7,6 @@ export type Todo = {
     appId: string;
     id?: string;
     handInDate?: string;
+    fileName: string;
+    fileRef?: string
   };

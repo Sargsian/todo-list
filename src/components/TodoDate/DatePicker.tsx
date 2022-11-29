@@ -8,6 +8,7 @@ import Header from './Header';
 import Time from './Time';
 
 import classes from './DatePicker.module.less';
+import Modal from '../Modal';
 
 dayjs.extend(weekdayPlugin);
 
@@ -62,35 +63,39 @@ const DatePicker = (props: Props) => {
       <img
         src='./calendar.svg'
         alt='calendar'
+        title='Назначить дедлайн'
         className={`${classes.DatePicker_calIcon} ${
           deadlineIsSet && classes.DatePicker_calIcon___success
         } ${deadLineIsEmpty && classes.DatePicker_calIcon___invalid}`}
         onClick={showCalendarHandler}
       />
       {showCalendar && (
-        <div className={classes.DatePicker_calendar}>
-          <Header
-            currentMonth={currentMonth}
-            nextMonth={nextMonth}
-            prevMonth={prevMonth}
-          />
-          <div
-            className={`${classes.DatePicker_content} ${
-              showTime && classes.DatePicker_content___showTime
-            }`}
-          >
-            <div className={classes.DatePicker_days}>
-              <Weekdays now={now} />
-              <Days currentMonth={currentMonth} dayHandler={pickDayHandler} />
-            </div>
-            <Time
-              goBack={() => setShowTime(false)}
-              date={date}
-              deadlineHandler={deadlineHandler}
-              closeCalendar={() => setShowCalendar(false)}
+        <>
+          <div className={classes.DatePicker_calendar}>
+            <Header
+              currentMonth={currentMonth}
+              nextMonth={nextMonth}
+              prevMonth={prevMonth}
             />
+            <div
+              className={`${classes.DatePicker_content} ${
+                showTime && classes.DatePicker_content___showTime
+              }`}
+            >
+              <div className={classes.DatePicker_days}>
+                <Weekdays now={now} />
+                <Days currentMonth={currentMonth} dayHandler={pickDayHandler} />
+              </div>
+              <Time
+                goBack={() => setShowTime(false)}
+                date={date}
+                deadlineHandler={deadlineHandler}
+                closeCalendar={() => setShowCalendar(false)}
+              />
+            </div>
           </div>
-        </div>
+          <Modal onClick={() => setShowCalendar(false)} show={showCalendar} />
+        </>
       )}
     </div>
   );

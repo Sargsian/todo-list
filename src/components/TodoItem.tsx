@@ -17,7 +17,7 @@ type Props = {
 
 const TodoItem = (props: Props) => {
   const {
-    todo: { deadline, isDone, isDoneLate, appId },
+    todo: { deadline, isDone, isDoneLate, appId, fileRef, fileName },
     deleteTodoHandler,
   } = props;
   const [todoIsDone, setTodoIsDone] = useState(isDone);
@@ -72,7 +72,6 @@ const TodoItem = (props: Props) => {
   };
 
   const editTodoHandler = () => {
-    console.log(editTodo);
     if (editTodo) {
       mutateTodo({ ...props.todo, title, desc }, 'PUT');
     }
@@ -109,15 +108,15 @@ const TodoItem = (props: Props) => {
         </div>
         <div className={classes.Todo_actions}>
           <span className={classes.Todo_iconActions}>
-            <button>
-              <img src='/attach.svg' alt='выполнено' />
-            </button>
+            <a href={fileRef} download={fileName} target='blank' title={`скачать ${fileName}`}>
+              <img src='/attach.svg' alt='файл' />
+            </a>
             <button
               onClick={finishTask}
               style={{ pointerEvents: isDone || isDoneLate ? 'none' : 'auto' }}
               disabled={isDone || isDoneLate}
             >
-              <img src='/check.svg' alt='выполнено' />
+              <img src='/check.svg' alt='выполнено' title='Выполнено!'/>
             </button>
           </span>
           <Button onClick={editTodoHandler} disable={isDone || isDoneLate}>
