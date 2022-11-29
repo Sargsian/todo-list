@@ -6,11 +6,16 @@ import Days from './Days';
 import Weekdays from './Weekdays';
 import Header from './Header';
 import Time from './Time';
-
-import classes from './DatePicker.module.less';
 import Modal from '../Modal';
 
+import classes from './DatePicker.module.less';
+
 dayjs.extend(weekdayPlugin);
+
+/**
+ * Calendar component to select a deadline
+ * @type {string}
+ */
 
 type Props = {
   deadlineHandler: (deadline: string) => void;

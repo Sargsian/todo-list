@@ -22,12 +22,11 @@ export const useMutate = () => {
       case 'DELETE':
         {
           const finalApi = `${api}/${todo.id}.json`;
-          const res = await axios.delete(finalApi);
-          console.log(res);
+          await axios.delete(finalApi);
         }
         break;
 
-      default:
+      case 'POST':
         {
           const finalApi = `${api}.json`;
           await axios.post(finalApi, todo);

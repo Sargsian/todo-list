@@ -4,8 +4,6 @@ import { Todo } from '../models/types';
 import { list, ref, getDownloadURL } from 'firebase/storage';
 import { storage } from '../firebase';
 
-
-
 const handleFile = async (appId: string, fileName: string) => {
   try {
     const fileList = await list(ref(storage));
@@ -59,7 +57,6 @@ export const useFetch = (api: string) => {
 
   const refetch = () => {
     fetchData();
-    console.log('refetch');
   };
 
   return { data, loading, error, refetch };

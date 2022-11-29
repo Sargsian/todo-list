@@ -17,10 +17,6 @@ const Time = (props: Props) => {
 
   const hourHandler = (e: ChangeEvent<HTMLInputElement>) => {
     let inputNumber = e.target.value.substring(0, 2);
-    // if (+inputNumber < 10) {
-    //   console.log('is less');
-    //   inputNumber = 0 + inputNumber;
-    // }
     setHour(inputNumber);
   };
 
@@ -31,7 +27,6 @@ const Time = (props: Props) => {
 
   const onTimeHandler = () => {
     const deadline = `${date} ${hour}:${minutes}`;
-    console.log(deadline)
     deadlineHandler(deadline);
     closeCalendar();
     goBack();

@@ -1,4 +1,3 @@
-@danger-color: '../App.less';
 
 .TodoItem {
   width: 100%;
@@ -8,12 +7,13 @@
   border: 1px solid black;
   padding: 1rem;
   border-radius: 1rem;
-  gap: 4rem;
+  gap: 5rem;
   @media (max-width: 815px) {
     flex-direction: column;
     align-items: unset;
     gap: 2rem;
   }
+  
 }
 
 .TodoItem___isDone {
@@ -27,90 +27,9 @@
   background-color: rgb(255, 0, 0);
 }
 
-.TodoItem_date {
-  font-size: 1.6rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  span {
-    display: block;
-  }
-}
 
-.Todo_content {
-  overflow: hidden;
-  word-wrap: break-word;
-  width: 100%;
-  padding-left: 1rem;
-  input {
-    font: inherit;
-    display: block;
-    margin: 0;
-    padding: 0;
-    width: 90%;
-    border-radius: 1rem;
-    margin-left: -1rem;
-    padding-left: 1rem;
-    border: none;
-    outline: none;
-  }
 
-  h1,
-  input:first-child {
-    font-weight: 400;
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-  }
-  h3,
-  input:not(:first-child) {
-    font-weight: 400;
-    font-size: 1.8rem;
-  }
-}
 
-.Todo_actions {
-  margin-left: auto;
-  display: flex;
-  gap: 1.5rem;
-  justify-content: flex-end;
-  flex-direction: column;
-  // flex-direction: row;
-  @media (max-width: 815px) {
-    flex-direction: row;
-  }
-  @media (max-width: 406px) {
-    flex-direction: column;
-  }
-  span {
-    margin: auto;
-  }
-}
 
-.Todo_iconActions {
-  display: flex;
-  gap: 1.5rem;
-  position: relative;
-  button {
-    background: none;
-    border: none;
-  }
-  img {
-    width: 3rem;
-    display: block;
-    &:hover {
-      cursor: pointer;
-      opacity: 0.5;
-    }
-  }
-}
-
-.Todo___deleteButton {
-  color: @danger-color;
-  outline: 1px solid @danger-color;
-  pointer-events: all;
-  &:hover {
-    background-color: @danger-color;
-  }
-}
 
 

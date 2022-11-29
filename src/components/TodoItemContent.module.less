@@ -1,0 +1,40 @@
+.TodoItem_date {
+  font-size: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  span {
+    display: block;
+  }
+}
+
+.Todo_content {
+  overflow: hidden;
+  word-wrap: break-word;
+  width: 100%;
+  padding-left: 1rem;
+  input {
+    font: inherit;
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 90%;
+    border-radius: 1rem;
+    margin-left: -1rem;
+    padding-left: 1rem;
+    border: none;
+    outline: none;
+  }
+
+  h1,
+  input:first-child {
+    font-weight: 400;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+  h3,
+  input:not(:first-child) {
+    font-weight: 400;
+    font-size: 1.8rem;
+  }
+}

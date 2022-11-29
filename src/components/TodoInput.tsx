@@ -1,4 +1,5 @@
 import { RefObject } from 'react';
+
 import classes from './TodoInput.module.less';
 
 type Props = {

@@ -1,18 +1,17 @@
-import Button from './Button';
 import { FormEvent, useRef, useState } from 'react';
+import Button from './Button';
 import { Todo } from '../models/types';
 import TodoDate from './TodoDate';
 import TodoInput from './TodoInput';
 import TodoFile from './TodoFile';
 import { storage } from '../firebase';
 import { ref, uploadBytes } from 'firebase/storage';
-import { useFetch } from '../hooks/useFetch';
 
 import classes from './TodoForm.module.less';
 
 type Props = {
   addTodo: (todo: Todo) => void;
-  refetch: () => void
+  refetch: () => void;
 };
 
 const TodoForm = (props: Props) => {
@@ -24,7 +23,6 @@ const TodoForm = (props: Props) => {
   const [fileListIsEmpty, setFileListIsEmpty] = useState(false);
   const [fileIsLoading, setFileIsLoading] = useState(false);
 
-
   const { addTodo, refetch } = props;
 
   const addTodoHandler = (e: FormEvent) => {
@@ -32,22 +30,13 @@ const TodoForm = (props: Props) => {
     const title = titleRef.current;
     const desc = descRef.current;
 
-    if (!title?.value) {
-      setTitleIsEmpty(true);
-    }
-    if (!desc?.value) {
-      setDescIsEmpty(true);
-    }
-
-    if (!deadline) {
-      setDeadlineIsEmpty(true);
-    }
-
-    if (!file) {
-      setFileListIsEmpty(true);
-    }
+    if (!title?.value) setTitleIsEmpty(true);
+    if (!desc?.value) setDescIsEmpty(true);
+    if (!deadline) setDeadlineIsEmpty(true);
+    if (!file) setFileListIsEmpty(true);
 
     if (!title?.value || !desc?.value || !deadline || !file) return;
+    
     const appId = Date.now().toString();
     addTodo({
       title: title.value,
@@ -58,13 +47,13 @@ const TodoForm = (props: Props) => {
       appId: appId,
       fileName: file.name,
     });
+    
     const fileRef = ref(storage, `${appId}-${file.name}`);
     setFileIsLoading(true);
     uploadBytes(fileRef, file).then(() => {
       setFileIsLoading(false);
-      refetch()
+      refetch();
     });
-    refetch();
 
     title.value = '';
     desc.value = '';
@@ -119,7 +108,7 @@ const TodoForm = (props: Props) => {
         htmlFor={'desc'}
         maxLength={455}
       />
-      <Button classModifier={classes.TodoForm___formButton} onClick={refetch}>
+      <Button classModifier={classes.TodoForm___formButton}>
         Создать todo
       </Button>
     </form>

@@ -22,17 +22,16 @@ const TodoFile = (props: Props) => {
     const fileList = e.target.files;
     if (fileList) {
       attachFileHandler(fileList[0]);
+      e.target.value = '';
     }
   };
-
-  console.log(fileIsAttached, 'file is attached');
 
   return (
     <label
       htmlFor='file-upload'
       title='Прикрепить файл'
       className={`${classes.TodoForm_attachIcon} ${
-        fileIsAttached && classes.TodoForm_attachIcon___success
+        fileIsAttached !== undefined && classes.TodoForm_attachIcon___success
       } ${fileIsEmpty && classes.TodoForm_attachIcon___invalid} `}
       onClick={clearWarningsOnFocus}
     >

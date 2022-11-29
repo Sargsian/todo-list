@@ -1,10 +1,11 @@
-import Button from './Button';
-import { ChangeEvent, useState } from 'react';
-import { compareDates } from '../utils/DateUtils';
-import dayjs from 'dayjs';
+import { useState } from 'react';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { Todo } from '../models/types';
+import { compareDates } from '../utils/DateUtils';
 import { useMutate } from '../hooks/useMutate';
+import { Todo } from '../models/types';
+import dayjs from 'dayjs';
+import TodoItemContent from './TodoItemContent';
+import TodoItemActions from './TodoItemActions';
 
 import classes from './TodoItem.module.less';
 
@@ -16,31 +17,17 @@ type Props = {
 };
 
 const TodoItem = (props: Props) => {
-  const {
-    todo: { deadline, isDone, isDoneLate, appId, fileRef, fileName },
-    deleteTodoHandler,
-  } = props;
+  const { todo, deleteTodoHandler } = props;
+  const { deadline, isDone, isDoneLate, appId, fileRef, fileName } = todo;
+
   const [todoIsDone, setTodoIsDone] = useState(isDone);
   const [todoIsDoneLate, setTodoIsDoneLate] = useState(isDoneLate);
   const [editTodo, setEditTodo] = useState(false);
-  const [title, setTitle] = useState(props.todo.title);
-  const [desc, setDesc] = useState(props.todo.desc);
-  const [handInDate, setHandInDate] = useState(props.todo.handInDate);
-
-  const changeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-  };
-  const changeDescHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setDesc(e.target.value);
-  };
+  const [title, setTitle] = useState(todo.title);
+  const [desc, setDesc] = useState(todo.desc);
+  const [handInDate, setHandInDate] = useState(todo.handInDate);
 
   const { mutateTodo } = useMutate();
-
-  const splitDeadline = deadline.split(' ');
-  const date = splitDeadline[0];
-  const time = splitDeadline[1];
-
-  const formattedDate = dayjs(date).format('DD/MM/YYYY');
 
   const now = dayjs().format('YYYY/MM/DD HH:mm');
 
@@ -58,22 +45,22 @@ const TodoItem = (props: Props) => {
     setHandInDate(handInDate);
     if (compareDates(deadline, now)) {
       setTodoIsDone(true);
-      mutateTodo({ ...props.todo, isDone: true, handInDate }, 'PUT');
+      mutateTodo({ ...todo, isDone: true, handInDate }, 'PUT');
       return;
     }
     setTodoIsDoneLate(true);
-    mutateTodo({ ...props.todo, isDoneLate: true, handInDate }, 'PUT');
+    mutateTodo({ ...todo, isDoneLate: true, handInDate }, 'PUT');
   };
 
   const deleteTodo = async () => {
-    mutateTodo(props.todo, 'DELETE');
+    mutateTodo(todo, 'DELETE');
 
     deleteTodoHandler(appId);
   };
 
   const editTodoHandler = () => {
     if (editTodo) {
-      mutateTodo({ ...props.todo, title, desc }, 'PUT');
+      mutateTodo({ ...todo, title, desc }, 'PUT');
     }
     setEditTodo(!editTodo);
   };
@@ -81,54 +68,24 @@ const TodoItem = (props: Props) => {
   return (
     <>
       <div className={`${classes.TodoItem} ${itemStateClassName}`}>
-        <div className={classes.TodoItem_date}>
-          <span>
-            До: {time} <br /> {formattedDate}
-          </span>
-          {handInDate && (
-            <span>
-              Выполнено: <br /> {handInDate.split(' ')[0]}
-              <br />
-              {handInDate.split(' ')[1]}
-            </span>
-          )}
-        </div>
-        <div className={classes.Todo_content}>
-          {editTodo ? (
-            <>
-              <input type='text' value={title} onChange={changeTitleHandler} />
-              <input type='text' value={desc} onChange={changeDescHandler} />
-            </>
-          ) : (
-            <>
-              <h1>{title}</h1>
-              <h3>{desc}</h3>
-            </>
-          )}
-        </div>
-        <div className={classes.Todo_actions}>
-          <span className={classes.Todo_iconActions}>
-            <a href={fileRef} download={fileName} target='blank' title={`скачать ${fileName}`}>
-              <img src='/attach.svg' alt='файл' />
-            </a>
-            <button
-              onClick={finishTask}
-              style={{ pointerEvents: isDone || isDoneLate ? 'none' : 'auto' }}
-              disabled={isDone || isDoneLate}
-            >
-              <img src='/check.svg' alt='выполнено' title='Выполнено!'/>
-            </button>
-          </span>
-          <Button onClick={editTodoHandler} disable={isDone || isDoneLate}>
-            Изменить
-          </Button>
-          <Button
-            classModifier={classes.Todo___deleteButton}
-            onClick={deleteTodo}
-          >
-            Удалить
-          </Button>
-        </div>
+        <TodoItemContent
+          desc={desc}
+          editTodo={editTodo}
+          handInDate={handInDate}
+          setDesc={setDesc}
+          setTitle={setTitle}
+          deadline={deadline}
+          title={title}
+        />
+        <TodoItemActions
+          deleteTodo={deleteTodo}
+          editTodoHandler={editTodoHandler}
+          fileName={fileName}
+          fileRef={fileRef}
+          finishTask={finishTask}
+          isDone={todoIsDone}
+          isDoneLate={todoIsDoneLate}
+        />
       </div>
     </>
   );

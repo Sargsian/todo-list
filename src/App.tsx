@@ -19,11 +19,8 @@ const App = () => {
 
   const { mutateTodo } = useMutate();
 
-  console.log(data);
-
   const addTodo = async (todo: Todo) => {
     await mutateTodo(todo, 'POST');
-    refetch();
   };
 
   const deleteTodoHandler = (appId: string) => {

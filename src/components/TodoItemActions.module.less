@@ -1,0 +1,45 @@
+@danger-color: '../App.less';
+
+.Todo_actions {
+  margin-left: auto;
+  display: flex;
+  gap: 1.5rem;
+  justify-content: flex-end;
+  flex-direction: column;
+  @media (max-width: 815px) {
+    flex-direction: row;
+  }
+  @media (max-width: 406px) {
+    flex-direction: column;
+  }
+  span {
+    margin: auto;
+  }
+}
+
+.Todo_iconActions {
+  display: flex;
+  gap: 1.5rem;
+  position: relative;
+  button {
+    background: none;
+    border: none;
+  }
+  img {
+    width: 3rem;
+    display: block;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.5;
+    }
+  }
+}
+
+.Todo___deleteButton {
+  color: @danger-color;
+  outline: 1px solid @danger-color;
+  pointer-events: all;
+  &:hover {
+    background-color: @danger-color;
+  }
+}
